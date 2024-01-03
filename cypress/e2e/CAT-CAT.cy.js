@@ -161,3 +161,34 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 03 )', () => {
 
 
 });
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it.only('Marca o tipo de atendimento como "Feedback"', () => {
+   
+    // Marcar o tipo de atendimento como "Feedback"
+    cy.get('input[value="feedback"]').check();
+
+    // Verificar se o valor foi realmente selecionado
+    cy.get('input[value="feedback"]').should('be.checked');
+  });
+
+  // Exercício Extra 01
+  it.only('Marca cada tipo de atendimento', () => {
+  
+    // Marcar cada tipo de atendimento e Verifica se cada radio foi marcado corretamente
+    cy.get('input[type="radio"]')
+    .should('have.length',3)
+    .each(function($radio){
+      cy.wrap($radio).check();
+      cy.wrap($radio).should('be.checked');
+    });
+  });
+
+});

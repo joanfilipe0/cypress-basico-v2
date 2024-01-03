@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+// const { delay } = require("cypress/types/bluebird");
+
 describe('Central de Atendimento ao Cliente TAT', () => {
 
   // Código a ser executado antes de cada teste
@@ -7,18 +9,21 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.visit('./src/index.html');
   })
 
-  it('verifica o título da aplicação', () => {
+  it('Verifica o título da aplicação', () => {
     cy.title().should('eq', 'Central de Atendimento ao Cliente TAT');
   })
 
   // Exercicio
-  it('preenche os campos obrigatórios e envia o formulário', () => {
+  it('Preenche os campos obrigatórios e envia o formulário', () => {
     
+    // Criando variável de texto longa para testes de type com delay ( Exercício Extra 01 )
+    const longtext = 'Texto longo para testes Texto longo para testes Texto longo para testes Texto longo para testes Texto longo para testes Texto longo para testes'
+
     // Preenche os campos obrigatórios
     cy.get('#firstName').type('SeuNome');
     cy.get('#lastName').type('SeuSobrenome');
     cy.get('#email').type('seuemail@example.com');
-    cy.get('#open-text-area').type('Mensagem de teste para ajuda.');
+    cy.get('#open-text-area').type(longtext, { delay: 0 });
 
     // Marca a opção de contato preferencial
     cy.get('#email-checkbox').check();

@@ -29,7 +29,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#email-checkbox').check();
 
     // Clica no botão Enviar
-    cy.get('.button[type="submit"]').click();
+    cy.contains('button','Enviar').click();
 
     // Verifica se a mensagem de sucesso está visível
     cy.get('.success').should('be.visible');
@@ -49,7 +49,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#open-text-area').type('Mensagem de teste para ajuda.');
 
     // Clica no botão Enviar
-    cy.get('.button[type="submit"]').click();
+    cy.contains('button','Enviar').click();
 
     // Verifica se a mensagem de erro está visível
     cy.get('.error').should('be.visible');
@@ -78,15 +78,15 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#phone-checkbox').check();
 
     // Clica no botão Enviar
-    cy.get('.button[type="submit"]').click();
+    cy.contains('button','Enviar').click();
 
     // Verifica se a mensagem de erro está visível para o campo de telefone
     cy.get('.error').should('be.visible');
   });
 
   // Exercício Extra 05
-  it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
- 
+  it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
+
     // Preenche os campos
     cy.get('#firstName').type('SeuNome').should('have.value', 'SeuNome');
     cy.get('#lastName').type('SeuSobrenome').should('have.value', 'SeuSobrenome');
@@ -100,5 +100,24 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#phone').clear().should('have.value', '');
   });
 
+  // Exercício Extra 06
+  it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+
+    // Clica no botão Enviar
+    cy.contains('button','Enviar').click();
+
+    // Verifica se a mensagem de erro está visível para o campo de telefone
+    cy.get('.error').should('be.visible');
+  });
+
+  // Exercício Extra 07
+  it('envia o formulário com sucesso usando um comando customizado', () => {
+
+    // Preenche os campos obrigatórios e envia o formulário usando o comando customizado
+    cy.fillMandatoryFieldsAndSubmit();
+
+    // Verifica se a mensagem de sucesso está visível
+    cy.get('.success').should('be.visible');
+  });
 
 });

@@ -2,7 +2,7 @@
 
 // const { delay } = require("cypress/types/bluebird");
 
-describe('Central de Atendimento ao Cliente TAT', () => {
+describe('Central de Atendimento ao Cliente TAT ( Aula 02 )', () => {
 
   // Código a ser executado antes de cada teste
   beforeEach(() => {
@@ -111,7 +111,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   // Exercício Extra 07
-  it('envia o formulário com sucesso usando um comando customizado', () => {
+  it('Envia o formulário com sucesso usando um comando customizado', () => {
 
     // Preenche os campos obrigatórios e envia o formulário usando o comando customizado
     cy.fillMandatoryFieldsAndSubmit();
@@ -119,5 +119,45 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verifica se a mensagem de sucesso está visível
     cy.get('.success').should('be.visible');
   });
+
+});
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 03 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it('Seleciona um produto (YouTube) por seu texto', () => {
+    
+    // Selecionar o produto "YouTube" pelo texto
+    cy.get('#product').select('YouTube');
+
+    // Verificar se a opção foi realmente selecionada
+    cy.get('#product').should('have.value', 'youtube');
+  });
+
+  // Exercício Extra 01
+  it('Seleciona um produto (Mentoria) por seu texto', () => {
+    
+    // Selecionar o produto "Mentoria" pelo texto
+    cy.get('#product').select('Mentoria');
+  
+    // Verificar se a opção foi realmente selecionada
+    cy.get('#product').should('have.value', 'mentoria');
+  });
+
+  // Exercício Extra 02
+  it('Seleciona um produto (Blog) por seu índice', () => {
+    
+    // Selecionar o produto "Blog" pelo seu índice
+    cy.get('#product').select(1);
+    
+    // Verificar se a opção foi realmente selecionada
+    cy.get('#product').should('have.value', 'blog');
+  });
+
 
 });

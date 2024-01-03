@@ -170,7 +170,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
   })
 
   // Exercício
-  it.only('Marca o tipo de atendimento como "Feedback"', () => {
+  it('Marca o tipo de atendimento como "Feedback"', () => {
    
     // Marcar o tipo de atendimento como "Feedback"
     cy.get('input[value="feedback"]').check();
@@ -180,7 +180,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
   });
 
   // Exercício Extra 01
-  it.only('Marca cada tipo de atendimento', () => {
+  it('Marca cada tipo de atendimento', () => {
   
     // Marcar cada tipo de atendimento e Verifica se cada radio foi marcado corretamente
     cy.get('input[type="radio"]')
@@ -189,6 +189,49 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
       cy.wrap($radio).check();
       cy.wrap($radio).should('be.checked');
     });
+  });
+
+});
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 05 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it('Marca ambos checkboxes, depois desmarca o último', () => {
+   
+    // Marcar ambos checkboxes , desmarca o último e verifica se está desmarcado
+    cy.get('input[type ="checkbox"]')
+    .check()
+    .should('be.checked')
+    .last()
+    .uncheck()
+    .should('not.be.checked');
+   
+  });
+
+   // Exercício Extra 01
+   it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+
+    // Preenche outros campos obrigatórios
+    cy.get('#firstName').type('SeuNome');
+    cy.get('#lastName').type('SeuSobrenome');
+    cy.get('#email').type('seuemail@example.com');
+    cy.get('#open-text-area').type('Mensagem de teste para ajuda.');
+
+    // Marcar ambos checkboxes , desmarca o último e verifica se está desmarcado
+    cy.get('input[type ="checkbox"]')
+    .check()
+    .should('be.checked');
+    
+    // Clica no botão Enviar
+    cy.contains('button','Enviar').click();
+
+    // Verifica se a mensagem de erro está visível para o campo de telefone
+    cy.get('.error').should('be.visible');
   });
 
 });

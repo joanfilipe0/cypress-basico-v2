@@ -390,3 +390,32 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 11 )', () => {
   });
 
 });
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 12 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Verificando se Existe um Gato Na Página
+  it('Encontra o Gato Escondido 🐈', () => {
+
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+      .should((response) => {
+        const { body } = response
+        expect(body).to.include('🐈')
+      })
+
+  });
+
+  // Mostrando e Verificando o Gato Aparecendo
+  it.only('Encontra o Gato Escondido 🐈', () => {
+
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+
+  });
+
+});

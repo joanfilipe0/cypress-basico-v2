@@ -410,7 +410,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 12 )', () => {
   });
 
   // Mostrando e Verificando o Gato Aparecendo
-  it.only('Encontra o Gato Escondido 🐈', () => {
+  it('Encontra o Gato Escondido 🐈', () => {
 
     cy.get('#cat')
       .invoke('show')

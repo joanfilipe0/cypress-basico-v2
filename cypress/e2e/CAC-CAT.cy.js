@@ -297,10 +297,96 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 07 )', () => {
   it('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
 
     cy.get('#privacy a')
-      .invoke('removeAttr','target')
+      .invoke('removeAttr', 'target')
       .click()
 
     cy.contains('Talking About Testing').should('be.visible')
+  });
+
+});
+
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 11 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it('Avançando no tempo para testes ( Testando o Desaparecimento da Mensagem pós 3 segundos', () => {
+    cy.clock() // congela o relógio do navegador
+
+    // Preenche os campos obrigatórios e envia o formulário usando o comando customizado
+    cy.fillMandatoryFieldsAndSubmit();
+
+    // Verifica se a mensagem de sucesso está visível
+    cy.get('.success').should('be.visible');
+    cy.tick(3000) // avança o relógio três segundos (em milissegundos). Avanço este tempo para não perdê-lo esperando.
+
+    cy.get('.success').should('not.be.visible');
+  })
+
+  // Exercício Extra 1 - Rodando o Mesmo Testes Várias Vezes
+  Cypress._.times(3, () => {
+    it('Avançando no tempo para testes ( Testando o Desaparecimento da Mensagem pós 3 segundos', () => {
+      cy.clock() // congela o relógio do navegador
+
+      // Preenche os campos obrigatórios e envia o formulário usando o comando customizado
+      cy.fillMandatoryFieldsAndSubmit();
+
+      // Verifica se a mensagem de sucesso está visível
+      cy.get('.success').should('be.visible');
+      cy.tick(3000) // avança o relógio três segundos (em milissegundos). Avanço este tempo para não perdê-lo esperando.
+
+      cy.get('.success').should('not.be.visible');
+    })
+  })
+
+  // Exercício Extra 2
+  it('Exibindo e Escondendo Mensagens com .invoke', () => {
+
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  // Exercicio Extra 3
+  it('Preenche a área de texto usando o comando invoke', () => {
+
+    // Criando variável de texto longa para testes de type com delay
+    const longtext = Cypress._.repeat('Teste Teste', 20)
+
+    // Preenche o Campo de Texto e Verifica se Preenchido
+    cy.get('#open-text-area')
+      .invoke('val', longtext)
+      .should('have.value', longtext)
+
+  });
+
+  // Exercicio Extra 4
+  it('Realizando uma requisição http', () => {
+
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+      .should((response) => {
+        const { status, statusText , body } = response
+
+        expect(status).to.equal(200)
+        expect(statusText).to.equal('OK')
+        expect(body).to.include('CAC TAT')
+      })
+
   });
 
 });

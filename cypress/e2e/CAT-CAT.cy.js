@@ -29,7 +29,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 02 )', () => {
     cy.get('#email-checkbox').check();
 
     // Clica no botão Enviar
-    cy.contains('button','Enviar').click();
+    cy.contains('button', 'Enviar').click();
 
     // Verifica se a mensagem de sucesso está visível
     cy.get('.success').should('be.visible');
@@ -49,7 +49,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 02 )', () => {
     cy.get('#open-text-area').type('Mensagem de teste para ajuda.');
 
     // Clica no botão Enviar
-    cy.contains('button','Enviar').click();
+    cy.contains('button', 'Enviar').click();
 
     // Verifica se a mensagem de erro está visível
     cy.get('.error').should('be.visible');
@@ -78,7 +78,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 02 )', () => {
     cy.get('#phone-checkbox').check();
 
     // Clica no botão Enviar
-    cy.contains('button','Enviar').click();
+    cy.contains('button', 'Enviar').click();
 
     // Verifica se a mensagem de erro está visível para o campo de telefone
     cy.get('.error').should('be.visible');
@@ -104,7 +104,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 02 )', () => {
   it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
 
     // Clica no botão Enviar
-    cy.contains('button','Enviar').click();
+    cy.contains('button', 'Enviar').click();
 
     // Verifica se a mensagem de erro está visível para o campo de telefone
     cy.get('.error').should('be.visible');
@@ -131,7 +131,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 03 )', () => {
 
   // Exercício
   it('Seleciona um produto (YouTube) por seu texto', () => {
-    
+
     // Selecionar o produto "YouTube" pelo texto
     cy.get('#product').select('YouTube');
 
@@ -141,20 +141,20 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 03 )', () => {
 
   // Exercício Extra 01
   it('Seleciona um produto (Mentoria) por seu texto', () => {
-    
+
     // Selecionar o produto "Mentoria" pelo texto
     cy.get('#product').select('Mentoria');
-  
+
     // Verificar se a opção foi realmente selecionada
     cy.get('#product').should('have.value', 'mentoria');
   });
 
   // Exercício Extra 02
   it('Seleciona um produto (Blog) por seu índice', () => {
-    
+
     // Selecionar o produto "Blog" pelo seu índice
     cy.get('#product').select(1);
-    
+
     // Verificar se a opção foi realmente selecionada
     cy.get('#product').should('have.value', 'blog');
   });
@@ -171,7 +171,7 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
 
   // Exercício
   it('Marca o tipo de atendimento como "Feedback"', () => {
-   
+
     // Marcar o tipo de atendimento como "Feedback"
     cy.get('input[value="feedback"]').check();
 
@@ -181,14 +181,14 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 04 )', () => {
 
   // Exercício Extra 01
   it('Marca cada tipo de atendimento', () => {
-  
+
     // Marcar cada tipo de atendimento e Verifica se cada radio foi marcado corretamente
     cy.get('input[type="radio"]')
-    .should('have.length',3)
-    .each(function($radio){
-      cy.wrap($radio).check();
-      cy.wrap($radio).should('be.checked');
-    });
+      .should('have.length', 3)
+      .each(function ($radio) {
+        cy.wrap($radio).check();
+        cy.wrap($radio).should('be.checked');
+      });
   });
 
 });
@@ -202,19 +202,19 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 05 )', () => {
 
   // Exercício
   it('Marca ambos checkboxes, depois desmarca o último', () => {
-   
+
     // Marcar ambos checkboxes , desmarca o último e verifica se está desmarcado
     cy.get('input[type ="checkbox"]')
-    .check()
-    .should('be.checked')
-    .last()
-    .uncheck()
-    .should('not.be.checked');
-   
+      .check()
+      .should('be.checked')
+      .last()
+      .uncheck()
+      .should('not.be.checked');
+
   });
 
-   // Exercício Extra 01
-   it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+  // Exercício Extra 01
+  it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
 
     // Preenche outros campos obrigatórios
     cy.get('#firstName').type('SeuNome');
@@ -224,14 +224,83 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 05 )', () => {
 
     // Marcar ambos checkboxes , desmarca o último e verifica se está desmarcado
     cy.get('input[type ="checkbox"]')
-    .check()
-    .should('be.checked');
-    
+      .check()
+      .should('be.checked');
+
     // Clica no botão Enviar
-    cy.contains('button','Enviar').click();
+    cy.contains('button', 'Enviar').click();
 
     // Verifica se a mensagem de erro está visível para o campo de telefone
     cy.get('.error').should('be.visible');
+  });
+
+});
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 06 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it('Seleciona o arquivo example.json da pasta fixtures', () => {
+
+    cy.get('input[type="file"]')
+      .should('not.have.value')
+      .selectFile('./cypress/fixtures/example.json')
+      .should(function ($input) {
+        expect($input[0].files[0].name).to.equal('example.json')
+      })
+  });
+
+  // Exercício Extra 1 ( Drag-Drop Simula o clicar e arrastar )
+  it('Seleciona o arquivo example.json da pasta fixtures com drag-drop', () => {
+
+    cy.get('input[type="file"]')
+      .should('not.have.value')
+      .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop' })
+      .should(function ($input) {
+        expect($input[0].files[0].name).to.equal('example.json')
+      })
+  });
+
+  // Exercício Extra 2 
+  it('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+
+    cy.fixture('example.json').as('sampleFile');
+    cy.get('input[type="file"]')
+      .should('not.have.value')
+      .selectFile('@sampleFile')
+      .should(function ($input) {
+        expect($input[0].files[0].name).to.equal('example.json')
+      })
+  });
+
+});
+
+describe('Central de Atendimento ao Cliente TAT ( Aula 07 )', () => {
+
+  // Código a ser executado antes de cada teste
+  beforeEach(() => {
+    cy.visit('./src/index.html');
+  })
+
+  // Exercício
+  it.only('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+
+    cy.get('#privacy a').should('have.attr', 'target', '_blank')
+
+  });
+
+  // Exercício Extra 2
+  it.only('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+
+    cy.get('#privacy a')
+      .invoke('removeAttr','target')
+      .click()
+
+    cy.contains('Talking About Testing').should('be.visible')
   });
 
 });

@@ -287,14 +287,14 @@ describe('Central de Atendimento ao Cliente TAT ( Aula 07 )', () => {
   })
 
   // Exercício
-  it.only('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+  it('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
 
     cy.get('#privacy a').should('have.attr', 'target', '_blank')
 
   });
 
   // Exercício Extra 2
-  it.only('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+  it('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
 
     cy.get('#privacy a')
       .invoke('removeAttr','target')
